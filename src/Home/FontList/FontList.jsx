@@ -7,7 +7,7 @@ const FontList = () => {
 
     // Load fonts from backend
     const loadFonts = () => {
-        axios.get('http://localhost:5000/fonts')
+        axios.get('https://job-assignment-server-steel.vercel.app/fonts')
             .then(res => setFonts(res.data))
             .catch(err => console.error(err));
     };
@@ -28,7 +28,7 @@ const FontList = () => {
         }).then(async (result) => {
             if (result.isConfirmed) {
                 try {
-                    await axios.delete(`http://localhost:5000/fonts/${id}`);
+                    await axios.delete(`https://job-assignment-server-steel.vercel.app/fonts/${id}`);
                     // Reload the fonts after deletion
                     loadFonts();
 

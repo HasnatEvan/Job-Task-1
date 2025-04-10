@@ -9,7 +9,7 @@ const FontGroup = () => {
 
     // Fetch fonts when component mounts
     const fetchFonts = () => {
-        axios.get("http://localhost:5000/fonts")
+        axios.get("https://job-assignment-server-steel.vercel.app/fonts")
             .then(res => setFonts(res.data))
             .catch(err => console.error(err));
     };
@@ -73,7 +73,7 @@ const FontGroup = () => {
             })),
         };
 
-        axios.post("http://localhost:5000/groupfonts", groupData)
+        axios.post("https://job-assignment-server-steel.vercel.app/groupfonts", groupData)
             .then(() => {
                 Swal.fire({
                     icon: "success",

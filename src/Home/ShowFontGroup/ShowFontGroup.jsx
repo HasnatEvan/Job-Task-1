@@ -10,11 +10,11 @@ const ShowFontGroup = () => {
 
     // Load font groups and fonts
     useEffect(() => {
-        axios.get("http://localhost:5000/groupfonts")
+        axios.get("https://job-assignment-server-steel.vercel.app/groupfonts")
             .then(res => setFontGroups(res.data))
             .catch(err => console.error(err));
 
-        axios.get("http://localhost:5000/fonts") // Assuming this gives font list with _id & name
+        axios.get("https://job-assignment-server-steel.vercel.app/fonts") // Assuming this gives font list with _id & name
             .then(res => {
                 const map = {};
                 res.data.forEach(font => {
@@ -34,7 +34,7 @@ const ShowFontGroup = () => {
             confirmButtonText: "Yes, delete it!",
         }).then((result) => {
             if (result.isConfirmed) {
-                axios.delete(`http://localhost:5000/groupfonts/${id}`)
+                axios.delete(`https://job-assignment-server-steel.vercel.app/groupfonts/${id}`)
                     .then(() => {
                         setFontGroups(prev => prev.filter(group => group._id !== id));
                         Swal.fire("Deleted!", "Font group has been deleted.", "success");
@@ -50,7 +50,7 @@ const ShowFontGroup = () => {
     };
 
     const handleUpdate = (id) => {
-        axios.put(`http://localhost:5000/groupfonts/${id}`, { title: newTitle })
+        axios.put(`https://job-assignment-server-steel.vercel.app/groupfonts/${id}`, { title: newTitle })
             .then(() => {
                 setFontGroups(prev =>
                     prev.map(group =>

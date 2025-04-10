@@ -24,7 +24,7 @@ const UploadFont = () => {
                 formData.append("fontName", customFontName);
 
                 try {
-                    await axios.post("http://localhost:5000/fonts", formData, {
+                    await axios.post("https://job-assignment-server-steel.vercel.app/fonts", formData, {
                         headers: {
                             "Content-Type": "multipart/form-data",
                         },
