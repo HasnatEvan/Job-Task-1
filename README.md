@@ -86,8 +86,7 @@ Interface Segregation: Lightweight modular services
 
 Dependency Inversion: Separated concerns between UI, services & backend
 
-📝 License
-This project is licensed under the MIT License.
+
 
 🤝 Acknowledgment
 This task is part of the Full Stack JavaScript Developer Assignment to demonstrate the ability to build fully functional font management features using modern web development tools. 
