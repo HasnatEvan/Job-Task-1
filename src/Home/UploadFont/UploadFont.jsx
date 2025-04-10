@@ -1,10 +1,12 @@
 import { useState } from "react";
+import axios from "axios";
+import Swal from "sweetalert2";
 
 const UploadFont = () => {
     const [fontFile, setFontFile] = useState(null);
     const [fontName, setFontName] = useState("");
 
-    const handleFontUpload = (e) => {
+    const handleFontUpload = async (e) => {
         const file = e.target.files[0];
 
         if (file && file.name.endsWith(".ttf")) {
@@ -12,18 +14,53 @@ const UploadFont = () => {
             const customFontName = file.name.replace(".ttf", "").replace(/\s+/g, "-");
 
             const newFont = new FontFace(customFontName, `url(${fontURL})`);
-            newFont.load().then((loadedFont) => {
+            newFont.load().then(async (loadedFont) => {
                 document.fonts.add(loadedFont);
                 setFontName(customFontName);
                 setFontFile(file);
+
+                const formData = new FormData();
+                formData.append("font", file);
+                formData.append("fontName", customFontName);
+
+                try {
+                    await axios.post("http://localhost:5000/fonts", formData, {
+                        headers: {
+                            "Content-Type": "multipart/form-data",
+                        },
+                    });
+
+                    // SweetAlert
+                    Swal.fire({
+                        title: "Success!",
+                        text: "Font uploaded successfully.",
+                        icon: "success",
+                        confirmButtonText: "OK",
+                    }).then(() => {
+                        window.location.reload(); // Refresh page after alert
+                    });
+                } catch (error) {
+                    Swal.fire({
+                        title: "Error!",
+                        text: "Font upload failed.",
+                        icon: "error",
+                        confirmButtonText: "Try Again",
+                    });
+                    console.error(error);
+                }
             });
         } else {
-            alert("Please upload a valid .ttf file");
+            Swal.fire({
+                title: "Invalid File!",
+                text: "Please upload a valid .ttf file",
+                icon: "warning",
+                confirmButtonText: "OK",
+            });
         }
     };
 
     return (
-        <div className="w-full max-w-md mx-auto mt-10 p-5 border rounded-lg bg-white shadow-md">
+        <div className="w-full max-w-md mx-auto mt-10 p-5 border rounded-lg bg-white shadow-md ">
             <div className="border-dashed border-2 border-gray-400 p-10 text-center rounded-md cursor-pointer">
                 <label htmlFor="font-upload" className="cursor-pointer">
                     <p className="text-gray-600">Click to upload a .ttf font file</p>
